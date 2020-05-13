@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/anguy124/first-vue-project/issues"
   },
-  "homepage": "https://github.com/anguy124/first-vue-project#readme"
+  "homepage": "https://github.com/anguy124/first-vue-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
