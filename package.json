@@ -1,0 +1,19 @@
+{
+  "name": "vue-practice-2.0",
+  "version": "1.0.0",
+  "description": "an's vue practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anguy124/first-vue-project.git"
+  },
+  "author": "An Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anguy124/first-vue-project/issues"
+  },
+  "homepage": "https://github.com/anguy124/first-vue-project#readme"
+}
