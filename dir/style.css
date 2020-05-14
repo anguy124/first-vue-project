@@ -17,14 +17,13 @@ body {
   }
   
   img {
-    border: 1px solid #d8d8d8;
     width: 70%;
     margin: 40px;
     box-shadow: 0px .5px 1px #d8d8d8;
   }
   
   .product-image {
-    width: 80%;
+    width: 70%;
   }
   
   .product-image,
@@ -51,9 +50,20 @@ body {
     background-color: #1E95EA;
     color: white;
     height: 40px;
-    width: 100px;
     font-size: 14px;
+    display: inline-block;
+    position: relative;
   } 
+
+  .buttonStyle {
+    border: 1px solid grey;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 0px;
+  }
   
   .disabledButton {
     background-color: #d8d8d8;
