@@ -5,7 +5,7 @@ body {
   }
   
   .nav-bar {
-    background: linear-gradient(-90deg, #84CF6A, #16C0B0);
+    background: black;
     height: 60px;
     margin-bottom: 15px;
   }
@@ -66,7 +66,7 @@ body {
   }
   
   .disabledButton {
-    background-color: #d8d8d8;
+    font-weight: bold;
   }
   
   .review-form {

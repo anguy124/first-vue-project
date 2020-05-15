@@ -8,33 +8,7 @@
     <body>
         <div class="nav-bar"></div>
         <div id="app">
-             <div class="product">
-                 <div class="product-image">
-                     <img v-bind:src="image">
-                 </div>
-                 <div class="product-info">
-                    <h2>{{ product }}</h2>
-                    <h3>{{ product_desc }}</h3>
-                    <p>ITEM {{ productID }}</p>
-                    <p>{{ productDetail }}</p>
-                    <p>{{ productPrice }}</p>
-                    <p v-if="inStock">In Stock</p>
-                    <p v-else>Out of Stock</p>
-
-                    <div v-for="variant in variants" v-bind:key="variant.variantID">
-                        <p>{{ variant.variantName }}</p>
-                        <p v-on:mouseover="updateProduct(variant.variantImage,variant.variantID,variant.variantDetail,variant.variantPrice)"
-                          class="buttonStyle">{{ variant.variantSize }}</p>
-                    </div>
-
-                    <button v-on:click="addToCart">Add to Cart</button>
-                    <button v-on:click="removeFromCart">Remove Item</button>
-                    <div class="cart">
-                        <p>Cart({{ cart }})</p>
-                    </div>
-                 </div>
-            </div>
-
+            <product v-bind:shipping="shipping"></product>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
         <script src="main.js"></script>
