@@ -1,5 +1,7 @@
 Vue.config.devtools = true
 
+var eventBus = new Vue()
+
 Vue.component('product', {
     props: {
         shipping: {
@@ -33,19 +35,8 @@ Vue.component('product', {
             
             <button v-on:click="removeFromCart">Remove Item</button>
 
-            <div>
-                <h2> Reviews </h2>
-                <p v-if="reviews.length == 0"> There are no reviews yet! </p>
-                <ul>
-                    <li v-for="review in reviews">
-                        <p>{{ review.name }}</p>
-                        <p>Rating: {{ review.rating }}</p>
-                        <p>Review: {{ review.review }}</p>
-                    </li>
-                </ul>
-            </div>
+            <product-tabs v-bind:reviews="reviews"></product-tabs>
 
-            <product-review v-on:review-submitted="addReview"></product-review>
             
         </div>
     </div>`,
@@ -96,9 +87,6 @@ Vue.component('product', {
         },
         removeFromCart(){
             this.$emit('remove-from-cart',this.variants[this.selectedVariant].variantID)
-        },
-        addReview(productReview){
-            this.reviews.push(productReview)
         }
 
         
@@ -124,13 +112,17 @@ Vue.component('product', {
             else return false
             
         }
+    },
+    mounted() {
+        eventBus.$on('review-submitted', productReview => {
+            this.reviews.push(productReview)
+        })
     }
 })
 
 Vue.component('product-review', {
     template: 
     `<form class="review-form" @submit.prevent="onSubmit">
-
     <p v-if="errors.length">
         <b>Please correct the following error(s)</b>
         <ul>
@@ -179,7 +171,7 @@ Vue.component('product-review', {
                     review: this.review,
                     rating: this.rating
                 }
-                this.$emit('review-submitted', productReview)
+                eventBus.$emit('review-submitted', productReview)
                 this.name = null, 
                 this.review = null, 
                 this.rating = null
@@ -191,6 +183,93 @@ Vue.component('product-review', {
                 if (!this.rating)this.errors.push("Rating required!")
             }
 
+        }
+    }
+})
+
+Vue.component('product-tabs', {
+    props: {
+        reviews: {
+            type: Array,
+            required: true
+        }
+    },
+    template: 
+    `<div>
+        <span class="tabs" 
+        v-bind:class="{ activeTab: selectedTab === tab }"
+        v-for="(tab,index) in tabs" 
+        v-bind:key="index"
+        v-on:click="selectedTab = tab">{{ tab }}</span>
+
+        <div v-show="selectedTab === 'Reviews'" class="review-section">
+            <h2> Reviews </h2>
+            <p v-if="reviews.length == 0"> There are no reviews yet! </p>
+            <ul>
+                <li v-for="review in reviews">
+                    <p>{{ review.name }}</p>
+                    <p>Rating: {{ review.rating }}</p>
+                    <p>Review: {{ review.review }}</p>
+                </li>
+            </ul>
+        </div>
+
+        <product-review v-show="selectedTab === 'Make a Review'"></product-review>
+
+        <div v-show="selectedTab === 'Details'">
+            <p> 
+            <b>What it is</b>: A fast-absorbing, rich moisturizer that provides instant and long-term hydration for dry, distressed skin and eczema.
+            <br>
+            <b>Skin Type:</b> Normal, Dry, and Combination
+            <br>
+            <b>Skincare Concerns:</b> Dryness, Fine Lines and Wrinkles, and Redness
+            <br>
+            <b>Formulation:</b> Rich Cream
+            <br>
+            <b>What Else You Need to Know:</b> Award-winning Ultra Repair Cream is instantly absorbed for immediate relief for parched skin. Suitable for all skin types, even sensitive, and the whole family. Formulated with colloidal oatmeal, this soothing moisturizer leaves your skin feeling smooth, hydrated, and comfortable after just a single use.
+            <br>
+            <b>Clinical Results: In an independent clinical study:</b>
+            - 169% immediate improvement in skin hydration
+            <br>
+            <b>In a consumer perception study:</b>
+            - 100% reported a lasting improvement in skin dryness
+            - 100% reported the product helped soothe, moisturize, and condition skin
+            <br>
+            <b>Clean at Sephora</b>
+            When you spot our Clean seal, you can be sure we’ve checked that this brand’s product is made without the ingredients you told us you’d most like to avoid.
+            <br>
+            <b>Clean at Sephora™ is formulated without:</b>
+            Sulfates SLS and SLES, parabens, formaldehydes, formaldehyde-releasing agents, phthalates, mineral oil, retinyl palmitate, oxybenzone, coal tar, hydroquinone, triclosan, triclocarban. All skincare, hair, and makeup brands with the Clean Seal have less than one percent of synthetic fragrances. </p>
+        </div>
+
+        <div v-show="selectedTab === 'How to Use'">
+            <p><b>Suggested Usage:</b><br>
+            -Apply to face and/or body at least twice daily or as needed to restore and soothe dry, uncomfortable skin.</p>
+        </div>
+
+        <div v-show="selectedTab === 'Ingredients'">
+        <p> 
+        <ul>
+            <li>
+                Colloidal Oatmeal (OTC): FDA-designated skin protectant that relieves itching and minor irritation caused by eczema, rashes, and other skin conditions.
+            </li>
+            <li>
+                Shea Butter: Moisturizes and protects the skin barrier with vitamins, minerals, and essential fatty acids.
+            </li>
+            <li>
+                Allantoin: Calms and soothes skin.
+            </li>
+        </ul>
+        Water/Aqua/Eau, Stearic Acid, Glycerin, C12-15 Alkyl Benzoate, Caprylic/Capric Triglyceride, Glyceryl Stearate, Glyceryl Stearate SE, Cetearyl Alcohol, Dimethicone, Butyrospermum Parkii (Shea) Butter, Squalane, Phenoxyethanol, Caprylyl Glycol, Allantoin, Xanthan Gum, Sodium Hydroxide, Disodium EDTA, Chrysanthemum Parthenium (Feverfew) Extract, Camellia Sinensis (White Tea) Leaf Extract, Glycyrrhiza Glabra (Licorice) Root Extract, Ceramide-3, Eucalyptus Globulus Leaf Extract.</p>
+        </div>
+
+    </div>
+
+    `, 
+    data(){
+        return {
+            tabs: ['Details', 'How to Use', 'Ingredients','Make a Review', 'Reviews'],
+            selectedTab: 'Details'
         }
     }
 })

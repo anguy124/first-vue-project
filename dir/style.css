@@ -80,6 +80,7 @@ body {
     margin: 40px;
     border: 1px solid #d8d8d8;
   }
+
   
   input {
     width: 100%;  
@@ -93,7 +94,8 @@ body {
   }
   
   .tabs {
-    margin-left: 20px;
+    font-weight: bold;
+    margin-left: 50px;
     cursor: pointer;
   }
   
