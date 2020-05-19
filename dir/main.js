@@ -34,11 +34,10 @@ Vue.component('product', {
                 v-bind:class="{ disabledButton: !inStock }">Add to Cart</button>
             
             <button v-on:click="removeFromCart">Remove Item</button>
+            <product-tabs class="tab-info" v-bind:reviews="reviews"></product-tabs>
 
-            <product-tabs v-bind:reviews="reviews"></product-tabs>
-
-            
         </div>
+
     </div>`,
     data() {
         return {

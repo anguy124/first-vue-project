@@ -23,13 +23,17 @@ body {
   }
   
   .product-image {
-    width: 70%;
+    width: 50%;
   }
   
   .product-image,
   .product-info {
     margin-top: 10px;
     width: 50%;
+  }
+
+  .tab-info {
+    padding-top: 30px;
   }
   
   .color-box {
