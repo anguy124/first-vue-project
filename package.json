@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/anguy124/first-vue-project#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.3"
   }
 }
